@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>What Is Money? | AtenaCrypto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../styles.css" />
+
+  <style>
+    .difficulty-switch {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    .difficulty-btn {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+
+    .difficulty-btn.active {
+      background: linear-gradient(
+        to right,
+        var(--accent-primary),
+        var(--accent-secondary)
+      );
+      color: #000;
+      border-color: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="navbar"></div>
+
+  <main class="hero">
+    <div class="hero-logo">
+      <img src="../../atena_ai_logo.png" alt="Atena AI Logo" />
+    </div>
+
+    <h1>What Is Money?</h1>
+
+    <p class="subtitle" id="difficulty-text"></p>
+
+    <section class="card-grid" id="card-grid"></section>
+
+    <div class="difficulty-switch">
+      <button class="difficulty-btn active" data-level="beginner">Beginner</button>
+      <button class="difficulty-btn" data-level="intermediate">Intermediate</button>
+      <button class="difficulty-btn" data-level="advanced">Advanced</button>
+    </div>
+
+  </main>
+
+  <script src="../../script.js"></script>
+
+  <script>
+    const content = {
+      beginner: {
+        text: `Money is something people use to buy and sell goods and services.
+               It replaces bartering and makes everyday trade simple.`,
+        cards: [
+          {
+            title: "Simple Definition",
+            body: "Money is something everyone agrees has value and can be used to buy things."
+          },
+          {
+            title: "Everyday Example",
+            body: "Cash, cards, and digital payments are all forms of money."
+          }
+        ]
+      },
+
+      intermediate: {
+        text: `Money functions as a medium of exchange, a store of value,
+               and a unit of account within an economy.`,
+        cards: [
+          {
+            title: "Three Core Functions",
+            body: "Money enables exchange, preserves value over time, and measures prices."
+          },
+          {
+            title: "Economic Role",
+            body: "It allows specialization, trade, and complex market systems."
+          }
+        ]
+      },
+
+      advanced: {
+        text: `Money is a social and economic abstraction that coordinates trust,
+               value, and time preference within a system.`,
+        cards: [
+          {
+            title: "Monetary Theory",
+            body: "Money emerges from consensus, institutions, and credibility."
+          },
+          {
+            title: "Relevance to Bitcoin",
+            body: "Bitcoin challenges traditional monetary control through decentralization."
+          }
+        ]
+      }
+    };
+
+    const textEl = document.getElementById("difficulty-text");
+    const gridEl = document.getElementById("card-grid");
+    const buttons = document.querySelectorAll(".difficulty-btn");
+
+    function render(level) {
+      textEl.textContent = content[level].text;
+
+      gridEl.innerHTML = "";
+      content[level].cards.forEach(card => {
+        const el = document.createElement("div");
+        el.className = "info-card";
+        el.innerHTML = `<h3>${card.title}</h3><p>${card.body}</p>`;
+        gridEl.appendChild(el);
+      });
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        render(btn.dataset.level);
+      });
+    });
+
+    // Initial render
+    render("beginner");
+  </script>
+
+</body>
+</html>
